@@ -1,2 +1,15 @@
-# GettingAndCleaningDataProject
-Course project for Getting and Cleaning Data
+# Getting And Cleaning Data 
+##Course project 
+## Paul H
+
+
+##Getting data
+
+
+##Combining and Merging Data
+
+
+##Filtering Columns
+
+
+##Creating Tidy Data Set
