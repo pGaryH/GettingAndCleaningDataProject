@@ -81,16 +81,7 @@ rm(training.data, training.subject, training.activity, tb_train_data)
 ###########################################################
 # MERGE TRAINING & TEST DATA ##############################
 
-# may want to change?
-#class(dt.train);class(dt.test) # both data.frame
-
 dataset.full <- rbind(dt.train, dt.test) # test & training combined
-
-#dim(dataset.full) # 10299 x 563
-#dim(dt.test)     #  2947 x 563
-#dim(dt.train)    #  7352 x 563
-#colnames(dataset.full)
-#str(dataset.full) #data.frame
 
 #cleanup
 rm(dt.test, dt.train)
@@ -98,19 +89,16 @@ rm(dt.test, dt.train)
 #convert df to dt?
 dt.combined <- data.table(dataset.full)
 
-#colnames(dt.combined)
-
 # select combined dataset columns to keep     
 new.dt <- dplyr::select(dt.combined, one_of(col.names))
 
-# select subset of columns to keep 
-
 # assign text to activity numbers in activity_name column (mutate creates)
 #add column, then drop numeric activity column in next step because
-# this adds the column onto end
+
 activity.vector <- as.vector(activity.tb[,2])
 activity.vector
 
+# this adds the column onto end
 #populate new column with activity names, matches name to activity number in table
 df.named.activity <-    mutate(new.dt,  Activity_name = activity.vector[new.dt$activity]) 
 
@@ -129,26 +117,9 @@ tidy.data.set2 <- tidy.data.set %>% dplyr::arrange(Subject, Activity)
 
 rm(tidy.data.set)
 
-#dim(tidy.data.set2) # 180 x 66
-
 write.table(tidy.data.set2, row.name=FALSE, col.names=TRUE, file="tidy_data_set.txt")
 
 #cleanup
 rm(features.tbl, tb_mean_std_feat, df.named.activity, activity.tb, tb_mean_std_features)
-
-##### rename columns, manually enter meaningful names into vector to use.
-#********************************
-#You can run gsub with a regex on the data from features.txt.
-#That can remove the numbers,space, etc. 
-#************************************
-
-# subject_no activity tBodyAcc-mean()-X tBodyAcc-mean()-Y tBodyAcc-mean()-Z tBodyAcc-std()-X tBodyAcc-std()-Y
-# 24        2         0.1922746       -0.03364257       -0.10594911       -0.3548408      -0.09250435
-# 24        2         0.3101546       -0.05339125       -0.09910872       -0.2878663      -0.14058918
-# 24        2         0.3633846       -0.03921402       -0.10591509       -0.3053880       0.02814774
-# 24        2         0.3499661        0.03007744       -0.11578796       -0.3296381      -0.04214289
-# 24        2         0.2375938        0.01846687       -0.09649893       -0.3231143      -0.22977539
-# 24        2         0.1536272       -0.01843651       -0.13701846       -0.3300460      -0.19525335
-
 
 ######### end #################################
